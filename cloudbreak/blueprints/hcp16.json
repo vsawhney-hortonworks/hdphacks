@@ -1,0 +1,328 @@
+{
+    "configurations" : [
+        {
+            "core-site": {
+              "hadoop.proxyuser.root.users": "admin",
+              "fs.trash.interval": "4320"
+            }
+        },
+        {
+            "hdfs-site": {
+              "dfs.namenode.safemode.threshold-pct": "0.99"
+            }
+        },
+        {
+            "hive-site": {
+              "hive.exec.compress.output": "true",
+              "hive.merge.mapfiles": "true"
+            }
+        },
+        {
+            "mapred-site": {
+              "mapreduce.job.reduce.slowstart.completedmaps": "0.7",
+              "mapreduce.map.output.compress": "true",
+              "mapreduce.output.fileoutputformat.compress": "true"
+            }
+        },
+        {
+            "yarn-site": {
+              "yarn.acl.enable": "true"
+            }
+        },
+        {
+            "ams-site": {
+                "timeline.metrics.cache.size": "100"
+            }
+        },
+        {
+            "ams-hbase-site": {
+              "properties": {
+                "hbase.cluster.distributed": "true",
+                "hbase.rootdir": "file:///hadoopfs/fs1/metrics/hbase/data"
+              }
+            }
+        },
+        {
+            "storm-site" : {
+                "properties_attributes" : { },
+                "properties" : {
+                    "topology.classpath" : "/etc/hbase/conf:/etc/hadoop/conf",
+                    "supervisor.slots.ports" : "[6700,6701,6702,6703]"
+                }
+            }
+      },
+      {
+        "nifi-ambari-config": {
+          "nifi.security.encrypt.configuration.password": "changethisplease",
+          "nifi.max_mem": "1g",
+          "nifi.sensitive.props.key": "changethisplease"
+        }
+      },
+      {
+        "nifi-registry-ambari-config": {
+          "nifi.registry.security.encrypt.configuration.password": "changethisplease"
+        }
+      },
+      {
+            "kafka-broker": {
+                "properties": {
+                    "super.users" : "User:kafka;User:metron"
+                }
+            }
+      },
+      {
+        "metron-env" : {
+            "properties_attributes" : { },
+            "properties" : {
+                "storm_rest_addr" : "http://localhost:8744",
+                "zeppelin_server_url" : "localhost:9995",
+                "solr_zookeeper_url" : "{{zookeeper_quorum}}/solr"
+            }
+        }
+      },
+      {
+        "metron-indexing-env" : {
+          "properties_attributes" : { },
+          "properties" : {
+            "indexing_writer_parallelism" : "1",
+            "indexing_error_topic" : "indexing",
+            "indexing_topology_worker_childopts" : "",
+            "update_hbase_table" : "metron_update",
+            "indexing_input_topic" : "indexing",
+            "update_hbase_cf" : "t",
+            "indexing_acker_executors" : "1",
+            "indexing_kafka_start" : "LATEST",
+            "indexing_topology_max_spout_pending" : "",
+            "bolt_hdfs_rotation_policy" : "org.apache.storm.hdfs.bolt.rotation.TimedRotationPolicy",
+            "bolt_hdfs_rotation_policy_count" : "1",
+            "ra_indexing_writer" : "Solr",
+            "indexing_writer_class_name" : "org.apache.metron.solr.writer.SolrWriter",
+            "bolt_hdfs_rotation_policy_units" : "DAYS",
+            "indexing_workers" : "1",
+            "indexing_kafka_spout_parallelism" : "1",
+            "metron_apps_indexed_hdfs_dir" : "{{metron_apps_hdfs_dir}}/indexing/indexed",
+            "hdfs_writer_parallelism" : "1"
+          }
+        }
+      },
+      {
+        "metron-rest-env" : {
+          "properties_attributes" : {
+            "hidden" : {
+              "metron_jdbc_password" : "METRON_CLIENT"
+            }
+          },
+          "properties" : {
+            "metron_jdbc_platform" : "h2",
+            "metron_spring_options" : "",
+            "metron_jdbc_client_path" : "",
+            "metron_indexing_classpath" : "",
+            "metron_rest_pid_dir" : "/var/run/metron",
+            "metron_jdbc_driver" : "org.h2.Driver",
+            "metron_jdbc_username" : "root",
+            "metron_jdbc_password" : "metron",
+            "metron_sysconfig" : "/etc/default/metron",
+            "metron_rest_port" : "8082",
+            "metron_temp_grok_path" : "{{metron_apps_hdfs_dir}}/patterns/tmp",
+            "metron_spring_profiles_active" : "dev",
+            "metron_escalation_topic" : "escalation",
+            "metron_jvm_flags" : "",
+            "metron_jdbc_url" : "jdbc:h2:file:~/metrondb",
+            "metron_rest_classpath" : ""
+          }
+        }
+      }
+    ],
+    "host_groups" : [
+      {
+        "name": "metron",
+        "cardinality" : "1",
+        "components": [
+          { "name": "METRON_REST" },
+          { "name": "METRON_ALERTS_UI" },
+          { "name": "METRON_MANAGEMENT_UI" },
+  
+          { "name": "METRON_PARSERS" },
+          { "name": "METRON_ENRICHMENT_MASTER" },
+          { "name": "METRON_PROFILER" },
+          { "name": "METRON_INDEXING" },
+
+          { "name": "SOLR_SERVER" },
+          { "name": "STORM_UI_SERVER" },
+          { "name": "NIMBUS" },
+          { "name": "DRPC_SERVER" },
+          { "name": "ZEPPELIN_MASTER" },
+
+          { "name": "SPARK_CLIENT" },
+          { "name": "SPARK2_CLIENT" },
+          { "name": "YARN_CLIENT" },
+          { "name": "HDFS_CLIENT" },
+          { "name": "HBASE_CLIENT" },
+          { "name": "HIVE_CLIENT" },
+          { "name": "ZOOKEEPER_CLIENT" },
+          { "name": "MAPREDUCE2_CLIENT" },
+  
+          { "name": "METRICS_MONITOR" },
+          { "name": "METRON_CLIENT" }
+        ],
+        "configurations" : []
+      },
+      {
+        "name": "ambari",
+        "cardinality" : "1",
+        "components": [
+          { "name": "KNOX_GATEWAY" },
+          { "name": "AMBARI_SERVER"},
+          { "name": "INFRA_SOLR"},
+          { "name": "INFRA_SOLR_CLIENT" },
+          { "name": "METRICS_COLLECTOR"},
+          { "name": "METRICS_GRAFANA"},
+
+          { "name": "SPARK_CLIENT" },
+          { "name": "SPARK2_CLIENT" },
+          { "name": "YARN_CLIENT" },
+          { "name": "HDFS_CLIENT" },
+          { "name": "HBASE_CLIENT" },
+          { "name": "HIVE_CLIENT" },
+          { "name": "ZOOKEEPER_CLIENT" },
+          { "name": "MAPREDUCE2_CLIENT" },
+
+          { "name": "METRICS_MONITOR" },
+          { "name": "METRON_CLIENT" }
+        ],
+        "configurations" : []
+      },
+      {
+        "name": "master1",
+        "cardinality" : "1",
+        "components": [
+          { "name": "NAMENODE" },
+          { "name": "RESOURCEMANAGER" },
+          { "name": "ZOOKEEPER_SERVER" },
+
+          { "name": "HIVE_SERVER"},
+          { "name": "WEBHCAT_SERVER"},
+          { "name": "HIVE_METASTORE" },
+          { "name": "HCAT" },
+
+          { "name": "SPARK_CLIENT" },
+          { "name": "SPARK2_CLIENT" },
+          { "name": "YARN_CLIENT" },
+          { "name": "HDFS_CLIENT" },
+          { "name": "HBASE_CLIENT" },
+          { "name": "HIVE_CLIENT" },
+          { "name": "ZOOKEEPER_CLIENT" },
+          { "name": "MAPREDUCE2_CLIENT" },
+
+          { "name": "METRICS_MONITOR" },
+          { "name": "METRON_CLIENT" }
+        ],
+        "configurations" : []
+      },
+      {
+        "name": "master2",
+        "cardinality" : "1",
+        "components": [
+          { "name": "SECONDARY_NAMENODE" },
+          { "name": "APP_TIMELINE_SERVER" },
+          { "name": "SPARK_JOBHISTORYSERVER" },
+          { "name": "SPARK2_JOBHISTORYSERVER" },
+          { "name": "HISTORYSERVER" },
+          { "name": "ZOOKEEPER_SERVER" },
+
+          { "name": "SPARK_CLIENT" },
+          { "name": "SPARK2_CLIENT" },
+          { "name": "YARN_CLIENT" },
+          { "name": "HDFS_CLIENT" },
+          { "name": "HBASE_CLIENT" },
+          { "name": "HIVE_CLIENT" },
+          { "name": "ZOOKEEPER_CLIENT" },
+          { "name": "MAPREDUCE2_CLIENT" },
+          
+          { "name": "METRICS_MONITOR" },
+          { "name": "METRON_CLIENT" }
+        ],
+        "configurations" : []
+      },{
+        "name": "master3",
+        "cardinality" : "1",
+        "components": [
+          { "name": "HBASE_MASTER"},
+          { "name": "NIFI_MASTER" },
+          { "name": "NIFI_REGISTRY_MASTER" },
+          { "name": "ZOOKEEPER_SERVER" },
+
+          { "name": "SPARK_CLIENT" },
+          { "name": "SPARK2_CLIENT" },
+          { "name": "YARN_CLIENT" },
+          { "name": "HDFS_CLIENT" },
+          { "name": "HBASE_CLIENT" },
+          { "name": "HIVE_CLIENT" },
+          { "name": "ZOOKEEPER_CLIENT" },
+          { "name": "MAPREDUCE2_CLIENT" },
+
+          { "name": "METRICS_MONITOR" },
+          { "name": "METRON_CLIENT" }
+        ],
+        "configurations" : []
+      },
+      {
+        "name": "worker",
+        "cardinality": "3",
+        "components": [
+          { "name": "NODEMANAGER" },
+          { "name": "DATANODE" },
+          { "name": "HBASE_REGIONSERVER" },
+          { "name": "KAFKA_BROKER" },
+          { "name": "SUPERVISOR" },
+
+          { "name": "SPARK_CLIENT" },
+          { "name": "SPARK2_CLIENT" },
+          { "name": "YARN_CLIENT" },
+          { "name": "HDFS_CLIENT" },
+          { "name": "HBASE_CLIENT" },
+          { "name": "HIVE_CLIENT" },
+          { "name": "ZOOKEEPER_CLIENT" },
+          { "name": "MAPREDUCE2_CLIENT" },
+  
+          { "name": "METRICS_MONITOR" },
+          { "name": "METRON_CLIENT" }
+        ],
+        "configurations": []
+      }
+    ],
+    "settings" : [
+      {
+        "recovery_settings" : [
+          {
+            "recovery_enabled" : "true"
+          }
+        ]
+      },
+      {
+        "service_settings" : [
+          {
+            "name": "HIVE",
+            "credential_store_enabled" : "false"
+          },
+          {
+            "recovery_enabled" : "true",
+            "name": "AMBARI_METRICS"
+          }
+        ]
+      },
+      {
+        "component_settings" : [
+          {
+            "recovery_enabled" : "true",
+            "name": "METRICS_COLLECTOR"
+          }
+        ]
+      }
+    ],
+    "Blueprints" : {
+      "blueprint_name": "hcp",
+      "stack_name" : "HDP",
+      "stack_version" : "2.6"
+    }
+  }
