@@ -3,8 +3,8 @@
 BASE_DIR="$(dirname $0)"
 
 function usage {
-    echo " Usage: $0 <CLOUD> where CLOUD is either 'openstack' or 'aws'"
-    echo " [eg: $0 openstack]"
+    echo " Usage: $0 <CLOUD> where CLOUD is either 'field' or 'aws'"
+    echo " [eg: $0 field]"
     exit 1
 }
 
