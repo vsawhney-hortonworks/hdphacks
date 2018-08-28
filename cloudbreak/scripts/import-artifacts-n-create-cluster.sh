@@ -11,6 +11,7 @@ function usage {
 [[ -z $1 ]] && usage
 CLOUD=$1
 
-./$BASE_DIR/import-blueprints.sh
+./$BASE_DIR/import-mpacks.sh
 ./$BASE_DIR/import-recipes.sh
+./$BASE_DIR/import-blueprints.sh
 ./$BASE_DIR/create-cluster.sh $CLOUD
