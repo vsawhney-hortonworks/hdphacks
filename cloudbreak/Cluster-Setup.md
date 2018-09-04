@@ -14,7 +14,7 @@ Provision HCP 1.6 cluster (HDP 2.6.5, HDF 3.1.2, HDP Search 3.0.0) using Cloudbr
  1. Clone the repo
  
  2. Update cloud configurations
-    - under `cloudbreak/clusters/field/hwx-field-cloud/hwx-hcp.json` for OpenStack Field Cloud
+    - under `cloudbreak/clusters/field/hwx-hcp.json` for OpenStack Field Cloud
     - under `cloudbreak/clusters/aws/hwx-hcp.json` for AWS (TODO)
     
    especially:
