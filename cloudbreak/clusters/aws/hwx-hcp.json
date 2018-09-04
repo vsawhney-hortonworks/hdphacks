@@ -1,0 +1,241 @@
+{
+  "general": {
+    "name": "hcp-aws",
+    "credentialName": "se-aws-hcp"
+  },
+  "placement": {
+    "availabilityZone": "us-east-1c",
+    "region": "us-east-1"
+  },
+  "parameters": {},
+  "inputs": {},
+  "customDomain": {
+    "clusterNameAsSubdomain": false,
+    "hostgroupNameAsHostname": false
+  },
+  "tags": {
+    "userDefinedTags": {
+        "Owner": "athacker@hortonworks.com",
+         "Business Unit": "Solutions Engineering",
+         "Product": "HCP",
+         "End Date": "September 7, 2018",
+         "Hours of Operation": "Business EST",
+         "Business Justification": "HortonHacks"
+    }
+  },
+  "instanceGroups": [
+    {
+      "nodeCount": 1,
+      "group": "ambari",
+      "type": "GATEWAY",
+      "parameters": {},
+      "template": {
+        "volumeCount": 1,
+        "volumeSize": 100,
+        "rootVolumeSize": 50,
+        "parameters": {
+          "encrypted": false
+        },
+        "volumeType": "standard",
+        "instanceType": "m5.2xlarge"
+      },
+      "securityGroup": {
+        "securityGroupId": "sg-0f264365c9f3ffd21",
+        "securityRules": []
+      },
+      "recipeNames": [],
+      "recoveryMode": "MANUAL"
+    },
+    {
+      "nodeCount": 1,
+      "group": "master3",
+      "type": "CORE",
+      "parameters": {},
+      "template": {
+        "volumeCount": 1,
+        "volumeSize": 100,
+        "rootVolumeSize": 50,
+        "parameters": {
+          "encrypted": false
+        },
+        "volumeType": "standard",
+        "instanceType": "m5.xlarge"
+      },
+      "securityGroup": {
+        "securityGroupId": "sg-0f264365c9f3ffd21",
+        "securityRules": []
+      },
+      "recipeNames": [],
+      "recoveryMode": "MANUAL"
+    },
+    {
+      "nodeCount": 1,
+      "group": "master1",
+      "type": "CORE",
+      "parameters": {},
+      "template": {
+        "volumeCount": 1,
+        "volumeSize": 100,
+        "rootVolumeSize": 50,
+        "parameters": {
+          "encrypted": false
+        },
+        "volumeType": "standard",
+        "instanceType": "m5.xlarge"
+      },
+      "securityGroup": {
+        "securityGroupId": "sg-0f264365c9f3ffd21",
+        "securityRules": []
+      },
+      "recipeNames": [],
+      "recoveryMode": "MANUAL"
+    },
+    {
+      "nodeCount": 3,
+      "group": "worker",
+      "type": "CORE",
+      "parameters": {},
+      "template": {
+        "volumeCount": 1,
+        "volumeSize": 100,
+        "rootVolumeSize": 50,
+        "parameters": {
+          "encrypted": false
+        },
+        "volumeType": "standard",
+        "instanceType": "m5.2xlarge"
+      },
+      "securityGroup": {
+        "securityGroupId": "sg-0f264365c9f3ffd21",
+        "securityRules": []
+      },
+      "recipeNames": [],
+      "recoveryMode": "MANUAL"
+    },
+    {
+      "nodeCount": 1,
+      "group": "master2",
+      "type": "CORE",
+      "parameters": {},
+      "template": {
+        "volumeCount": 1,
+        "volumeSize": 100,
+        "rootVolumeSize": 50,
+        "parameters": {
+          "encrypted": false
+        },
+        "volumeType": "standard",
+        "instanceType": "m5.xlarge"
+      },
+      "securityGroup": {
+        "securityGroupId": "sg-0f264365c9f3ffd21",
+        "securityRules": []
+      },
+      "recipeNames": [],
+      "recoveryMode": "MANUAL"
+    },
+    {
+      "nodeCount": 1,
+      "group": "metron",
+      "type": "CORE",
+      "parameters": {},
+      "template": {
+        "volumeCount": 1,
+        "volumeSize": 100,
+        "rootVolumeSize": 50,
+        "parameters": {
+          "encrypted": false
+        },
+        "volumeType": "standard",
+        "instanceType": "m5.2xlarge"
+      },
+      "securityGroup": {
+        "securityGroupId": "sg-0f264365c9f3ffd21",
+        "securityRules": []
+      },
+      "recipeNames": [
+        "install-nodejs",
+        "install-wireshark",
+        "add-metron-user"
+      ],
+      "recoveryMode": "MANUAL"
+    }
+  ],
+  "stackAuthentication": {
+    "publicKeyId": "hcp-aws"
+  },
+  "network": {
+    "parameters": {
+      "subnetId": "subnet-0b34477c",
+      "vpcId": "vpc-d85076bd"
+    }
+  },
+  "imageSettings": {
+    "imageCatalog": "cloudbreak-default",
+    "imageId": "086a2119-4cc2-4655-511b-0a528f7406c0"
+  },
+  "cluster": {
+    "emailNeeded": false,
+    "rdsConfigNames": [],
+    "ambari": {
+      "blueprintName": "HCP: Hortonworks Cybersecurity Platform",
+      "gateway": {
+        "path": "hcp-botnet-demo",
+        "topologies": [
+          {
+            "topologyName": "knox",
+            "exposedServices": [
+              "AMBARI",
+              "WEBHDFS",
+              "HDFSUI",
+              "YARNUI",
+              "JOBHISTORYUI",
+              "HIVE",
+              "HIVE_INTERACTIVE",
+              "ATLAS",
+              "SPARKHISTORYUI",
+              "ZEPPELIN",
+              "RANGERUI",
+              "PROFILER-AGENT",
+              "BEACON"
+            ]
+          }
+        ],
+        "ssoProvider": "/hcp-botnet-demo/sso/api/v1/websso",
+        "gatewayType": "INDIVIDUAL",
+        "ssoType": "NONE"
+      },
+      "enableSecurity": false,
+      "userName": "admin",
+      "password": "h0rtonhacks",
+      "ambariStackDetails": {
+        "stack": "HDP-2.6",
+        "version": "2.6.5.0",
+        "os": "redhat6",
+        "stackRepoId": "HDP-2.6",
+        "stackBaseURL": "http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.6.5.0",
+        "utilsRepoId": "HDP-UTILS-1.1.0.22",
+        "utilsBaseURL": "http://public-repo-1.hortonworks.com/HDP-UTILS-1.1.0.22/repos/centos6",
+        "enableGplRepo": false,
+        "verify": true,
+        "repositoryVersion": "2.6.5.0-292",
+        "versionDefinitionFileUrl": "http://public-repo-1.hortonworks.com/HDP/centos6/2.x/updates/2.6.5.0/HDP-2.6.5.0-292.xml",
+        "mpacks": [
+          {
+            "name": "hcp160"
+          },
+          {
+            "name": "hdf312"
+          },
+          {
+            "name": "hdpsearch"
+          }
+        ]
+      },
+      "ambariRepoDetailsJson": {
+        "version": "2.6.2.2",
+        "baseUrl": "http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.6.2.2"
+      }
+    }
+  }
+}
