@@ -2,7 +2,7 @@
 
 Detection of Botnet traffic using various malware across different protocols and performing various actions.
 
-![ctu-13-botnet-scenarios](images/ctu-13-botnet-scenarios.png)
+![ctu13-botnet-scenarios](images/ctu13-botnet-scenarios.png)
 
 
 
