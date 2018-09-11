@@ -61,9 +61,11 @@ Provision HCP 1.6 cluster (HDP 2.6.5, HDF 3.1.2, HDP Search 3.0.0) using Cloudbr
    ```
 
 
+
 ### Architecture
 
 ![Architecture](images/arch.png)
+
 
 
 ### Simulation
