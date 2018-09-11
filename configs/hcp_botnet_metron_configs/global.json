@@ -1,0 +1,24 @@
+{
+  "es.clustername" : "metron",
+  "es.ip" : "node1:9300",
+  "es.date.format" : "yyyy.MM.dd.HH",
+  "parser.error.topic" : "indexing",
+  "update.hbase.table" : "metron_update",
+  "update.hbase.cf" : "t",
+  "es.client.settings" : {
+    "client.transport.ping_timeout" : "500s"
+  },
+  "solr.zookeeper" : "ip-172-31-27-209.us-east-2.compute.internal:2181,ip-172-31-23-212.us-east-2.compute.internal:2181,ip-172-31-26-253.us-east-2.compute.internal:2181/solr",
+  "profiler.client.period.duration" : "15",
+  "profiler.client.period.duration.units" : "MINUTES",
+  "user.settings.hbase.table" : "user_settings",
+  "user.settings.hbase.cf" : "cf",
+  "bootstrap.servers" : "ip-172-31-19-67.us-east-2.compute.internal:6667,ip-172-31-31-181.us-east-2.compute.internal:6667,ip-172-31-16-206.us-east-2.compute.internal:6667",
+  "source.type.field" : "source.type",
+  "threat.triage.score.field" : "threat.triage.score",
+  "enrichment.writer.batchSize" : "15",
+  "enrichment.writer.batchTimeout" : "0",
+  "profiler.writer.batchSize" : "15",
+  "profiler.writer.batchTimeout" : "0",
+  "geo.hdfs.file" : "/apps/metron/geo/default/GeoLite2-City.mmdb.gz"
+}
